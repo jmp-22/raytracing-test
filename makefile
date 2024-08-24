@@ -7,7 +7,7 @@ run: Main.o
 	g++ -std=c++11 -Wall -o run Main.o
 
 	
-Main.o: Main.cpp vec3.h color.h
+Main.o: Main.cpp vec3.h color.h ray.h
 	g++ -std=c++11 -Wall -c Main.cpp
 		
 	
