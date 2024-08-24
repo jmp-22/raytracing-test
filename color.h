@@ -1,9 +1,8 @@
 #ifndef COLOR_H
 #define COLOR_H
 
+#include "raytracer.h"
 #include "vec3.h"
-
-#include <iostream>
 
 using color = vec3; // alias for RGB color
 

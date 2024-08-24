@@ -7,8 +7,9 @@ run: Main.o
 	g++ -std=c++11 -Wall -o run Main.o
 
 	
-Main.o: Main.cpp vec3.h color.h ray.h
-	g++ -std=c++11 -Wall -c Main.cpp
+Main.o: Main.cpp raytracer.h hittable.h hittable_list.h sphere.h ray.h vec3.h 
+
+	g++ -std=c++11 -Wall -c Main.cpp 
 		
 	
 clean:
