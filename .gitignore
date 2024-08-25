@@ -2,3 +2,4 @@
 main.dSYM
 *.o
 run
+.DS_Store

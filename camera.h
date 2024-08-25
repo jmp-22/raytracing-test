@@ -4,6 +4,7 @@
 #include "raytracer.h"
 
 #include "hittable.h"
+#include "material.h"
 
 class camera {
     public:
@@ -28,7 +29,7 @@ class camera {
             std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
 
             for (int j = 0; j < image_height; j++) {
-                std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
+                std::clog << "\rScanlines remaining: %" << 100*j / 100*(image_height) << ' ' << std::flush;
                 for (int i = 0; i < image_width; i++) {
 
                     if (anti_aliasing) {
@@ -124,8 +125,12 @@ class camera {
             }
             hit_record rec;
             if (world.hit(r, interval(0.001, infinity), rec)) {
-                vec3 direction =  rec.normal + random_unit_vector();
-                return 0.7 * ray_color(ray(rec.p, direction), depth-1, world);
+                ray scattered;
+                color attenuation;
+                if (rec.mat->scatter(r, rec, attenuation, scattered)) {
+                    return attenuation * ray_color(scattered, depth - 1, world);
+                }
+                return color(0, 0, 0);
             }
             
             vec3 unit_direction = unit_vector(r.direction());
