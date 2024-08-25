@@ -15,11 +15,12 @@ int main() {
     camera cam;
 
     cam.aspect_ratio = 16.0 / 9.0;
-    cam.image_width  = 1920;
-    cam.samples_per_pixel = 100;
+    cam.image_width  = 400;
+    cam.samples_per_pixel = 200;
 
     cam.set_anti_aliasing(true);
-    cam.set_focal_length(1.3);
+    cam.set_focal_length(1);
+    cam.max_depth = 50;
 
     cam.render(world);
        
