@@ -20,7 +20,7 @@ class lambertian : public material {
         lambertian(const color& albedo) : albedo(albedo) {}
 
         bool scatter(const ray& r_in, const hit_record& rec, color& attenuation, ray& scattered) const override {
-            auto scatter_direction = rec.normal + 0*random_unit_vector();
+            auto scatter_direction = rec.normal + random_unit_vector();
 
             if (scatter_direction.near_zero()) {
                 scatter_direction = rec.normal;
@@ -38,17 +38,19 @@ class lambertian : public material {
 
 class metal : public material {
     public:
-        metal(const color& albedo) : albedo(albedo) {}
+        metal(const color& albedo, double rough) : albedo(albedo), rough(rough < 1 ? rough : 1) {}
         
         bool scatter(const ray& r_in, const hit_record& rec, color& attenuation, ray& scattered) const override {
             vec3 reflected = reflect(r_in.direction(), rec.normal);
+            reflected = unit_vector(reflected) + (rough * random_unit_vector());
             scattered = ray(rec.p, reflected);
             attenuation = albedo;
-            return true;
+            return (dot(scattered.direction(), rec.normal) > 0);
         }
 
     private:
         color albedo;
+        double rough;
 };
 
 #endif
