@@ -29,7 +29,7 @@ class camera {
             std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
 
             for (int j = 0; j < image_height; j++) {
-                std::clog << "\rScanlines remaining: " << (image_height-j) << ' ' << std::flush;
+                std::clog << "\rScanlines remaining: %" << 100*j / 100*(image_height) << ' ' << std::flush;
                 for (int i = 0; i < image_width; i++) {
 
                     if (anti_aliasing) {
